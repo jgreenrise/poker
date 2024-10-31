@@ -37,7 +37,7 @@ The Poker Service API is a Spring Boot application designed to evaluate poker ha
 
 1. Clone the repository:
    ```bash
-   git clone git@github.com:jgreenrise/poker.git
+   git clone https://github.com/jgreenrise/poker.git
    cd poker-service
    ```
 
