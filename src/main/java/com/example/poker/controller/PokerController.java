@@ -25,10 +25,11 @@ public class PokerController {
             boolean result = pokerService.isPokerHand(type, request);
             return ResponseEntity.ok(new ApiResponse<>(true, result, null, null));
         } catch (PokerException e) {
+            logger.error("PokerException occurred while processing request: {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ApiResponse<>(false, null, e.getErrorCode(), e.getMessage()));
         } catch (IllegalArgumentException e) {
+            logger.error("IllegalArgumentException occurred: {}", e.getMessage(), e);
             return ResponseEntity.badRequest().body(new ApiResponse<>(false, null, "ERR000", e.getMessage()));
         }
     }
-
 }

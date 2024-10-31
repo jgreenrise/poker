@@ -34,7 +34,7 @@ public class PokerControllerIntegrationTest {
 
         mockMvc.perform(post("/poker-service/v1/hands/straight")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"ranks\":[5,6,7,8,9],\"suits\":[\"S\",\"H\",\"D\",\"C\",\"H\"]}"))
+                        .content("{\"ranks\":[5,6,7,8,9],\"suits\":[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data").value(true));
@@ -47,7 +47,7 @@ public class PokerControllerIntegrationTest {
 
         mockMvc.perform(post("/poker-service/v1/hands/straight")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"ranks\":[5,6,7,8,9,10,11],\"suits\":[\"S\",\"H\",\"D\",\"C\",\"H\"]}"))
+                        .content("{\"ranks\":[5,6,7,8,9,10,11],\"suits\":[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value(ErrorCode.SIZE_MISMATCH.getCode()))
@@ -61,7 +61,7 @@ public class PokerControllerIntegrationTest {
 
         mockMvc.perform(post("/poker-service/v1/hands/straight")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"suits\":[\"S\",\"H\",\"D\",\"C\",\"H\"]}"))
+                        .content("{\"suits\":[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value(ErrorCode.NULL_LISTS.getCode()))
@@ -89,11 +89,25 @@ public class PokerControllerIntegrationTest {
 
         mockMvc.perform(post("/poker-service/v1/hands/straight")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"ranks\":[5,6,7,8,9,10,11],\"suits\":[\"S\",\"H\",\"D\",\"C\",\"H\"]}"))
+                        .content("{\"ranks\":[5,6,7,8,9,10,11],\"suits\":[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value(ErrorCode.INVALID_HAND_SIZE.getCode()))
                 .andExpect(jsonPath("$.message").value(ErrorCode.INVALID_HAND_SIZE.getMessage()));
+    }
+
+    @Test
+    public void whenInvalidSuit_thenReturnsErrorResponse() throws Exception {
+        when(pokerService.isPokerHand(eq("StraightPokerHand"), any()))
+                .thenThrow(new PokerException(ErrorCode.INVALID_SUIT));
+
+        mockMvc.perform(post("/poker-service/v1/hands/straight")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"ranks\":[5,6,7,8,9,10,11],\"suits\":[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.errorCode").value(ErrorCode.INVALID_SUIT.getCode()))
+                .andExpect(jsonPath("$.message").value(ErrorCode.INVALID_SUIT.getMessage()));
     }
 
     @Test
@@ -103,7 +117,7 @@ public class PokerControllerIntegrationTest {
 
         mockMvc.perform(post("/poker-service/v1/hands/straight")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"ranks\":[5,6,7,8,9],\"suits\":[\"S\",\"H\",\"D\",\"C\",\"H\"]}"))
+                        .content("{\"ranks\":[5,6,7,8,9],\"suits\":[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.errorCode").value("ERR000"))
@@ -120,5 +134,6 @@ public class PokerControllerIntegrationTest {
                         .content("{\"invalidField\":\"value\"}"))
                 .andExpect(status().isBadRequest());
     }
+
 
 }
