@@ -1,0 +1,145 @@
+openapi: 3.0.1
+info:
+  title: Poker Service API
+  version: 1.0.1
+  description: >
+    This API provides functionality for checking poker hands, specifically focusing on determining if a given hand qualifies as a Straight Poker Hand. 
+    The API allows clients to send a hand consisting of ranks and suits, and it will validate the hand according to poker rules.
+    Each request and response will provide detailed information, including error codes for better debugging.
+
+paths:
+  /poker-service/v1/hands/straight:
+    post:
+      summary: Check if a hand is a Straight Poker Hand
+      description: >
+        This endpoint accepts a poker hand and determines whether it is a Straight. 
+        A Straight consists of five consecutive ranks, regardless of the suits. 
+        The ranks must be provided as an array of integers, and the suits as an array of strings. 
+        If the provided hand is invalid, appropriate error codes will be returned.
+      requestBody:
+        required: true
+        description: >
+          The body of the request must contain the ranks and suits of the poker hand. 
+          Ranks should be integers representing card values, while suits should be strings representing the suit of each card.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PokerHandRequest'
+      responses:
+        '200':
+          description: Successful response indicating the result of the poker hand check.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Bad Request response indicating that the provided hand is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    PokerHandRequest:
+      type: object
+      properties:
+        ranks:
+          type: array
+          items:
+            type: integer
+            description: >
+              An array of integers representing the ranks of the cards in the hand. 
+              Valid values should correspond to poker card ranks (e.g., 2 for Two, 11 for Jack, 12 for Queen, 13 for King, 14 for Ace).
+        suits:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 1
+            description: >
+              An array of characters representing the suits of the cards in the hand. 
+              Possible values are:
+                - 'H' for hearts
+                - 'D' for diamonds
+                - 'C' for clubs
+                - 'S' for spades
+            enum:
+              - 'H'
+              - 'D'
+              - 'C'
+              - 'S'
+      required:
+        - ranks
+        - suits
+      description: >
+        Represents the request body required to check if a poker hand is a Straight. 
+        Both ranks and suits arrays must be of the same size.
+
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: >
+            Indicates whether the operation was successful (true) or failed (false).
+        data:
+          type: boolean
+          description: >
+            The result of the poker hand check, where `true` indicates the hand is a Straight and `false` indicates it is not.
+        errorCode:
+          type: string
+          description: >
+            A string representing the error code in case of a failure. 
+            This will be null if the operation is successful.
+        message:
+          type: string
+          description: >
+            A descriptive message providing additional information about the response or error.
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+          description: >
+            Indicates the failure of the operation, always set to false in case of an error response.
+        errorCode:
+          type: string
+          description: >
+            A string representing the specific error code returned by the API. 
+            This helps identify the nature of the error.
+          enum:
+            - ERR001
+            - ERR002
+            - ERR003
+        message:
+          type: string
+          description: >
+            A descriptive message explaining the reason for the error, 
+            providing clarity for the user regarding what went wrong.
+
+    ErrorCodes:
+      type: object
+      properties:
+        codes:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: >
+                  The unique code identifying the error type.
+              message:
+                type: string
+                description: >
+                  A detailed message explaining the error.
+            example:
+              - code: "ERR001"
+                message: "Both ranks and suits must be of size 5 or 7"
+              - code: "ERR002"
+                message: "Ranks and suits cannot be null."
+              - code: "ERR003"
+                message: "Ranks and suits must be of the same size."
