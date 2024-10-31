@@ -1,7 +1,14 @@
-Here's an updated README with additional positive and negative test scenarios using `curl` commands for the Poker Service API:
+Here's the updated README with the revised note, where **1** is now used for "A":
 
 ```markdown
 # Poker Service API
+
+**Note:** In this application, the ranks are represented as follows:
+- **10** for "10"
+- **11** for "J"
+- **12** for "Q"
+- **13** for "K"
+- **1** for "A"
 
 ## Project Description
 
@@ -44,7 +51,7 @@ The Poker Service API is a Spring Boot application designed to evaluate poker ha
    ./gradlew bootRun
    ```
 
-4. Access the application at `http://localhost:8080`.
+4. Access the swagger application at `http://localhost:8080/swagger-ui/index.html`.
 
 ## Usage
 
@@ -56,7 +63,7 @@ The Poker Service API is a Spring Boot application designed to evaluate poker ha
     - **Request Body:**
       ```json
       {
-        "ranks": ["10", "J", "Q", "K", "A"],
+        "ranks": [10, 11, 12, 13, 1],
         "suits": ["hearts", "hearts", "hearts", "hearts", "hearts"]
       }
       ```
@@ -87,7 +94,7 @@ The API is documented using OpenAPI specifications. You can view the documentati
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["10", "J", "Q", "K", "A"],
+  "ranks": [10, 11, 12, 13, 1],
   "suits": ["hearts", "hearts", "hearts", "hearts", "hearts"]
 }'
 ```
@@ -109,7 +116,7 @@ curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["3", "4", "5", "6", "7"],
+  "ranks": [3, 4, 5, 6, 7],
   "suits": ["clubs", "diamonds", "hearts", "spades", "clubs"]
 }'
 ```
@@ -131,7 +138,7 @@ curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["2", "3", "4", "5", "6", "7", "8"],
+  "ranks": [2, 3, 4, 5, 6, 7, 8],
   "suits": ["spades", "spades", "spades", "spades", "spades", "spades", "spades"]
 }'
 ```
@@ -155,7 +162,7 @@ curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["10", "J", "Q"],
+  "ranks": [10, 11, 12],
   "suits": ["hearts", "hearts"]
 }'
 ```
@@ -177,7 +184,7 @@ curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["2", "3", "4", "5", "6", "7", "8", "9"],
+  "ranks": [2, 3, 4, 5, 6, 7, 8, 9],
   "suits": ["hearts", "hearts", "hearts", "hearts", "hearts", "hearts", "hearts", "hearts"]
 }'
 ```
@@ -221,7 +228,7 @@ curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["10", "J", "Q"],
+  "ranks": [10, 11, 12],
   "suits": ["hearts", "diamonds", "clubs", "spades"]
 }'
 ```
@@ -243,7 +250,7 @@ curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 curl -X POST http://localhost:8080/poker-service/v1/hands/straight \
 -H "Content-Type: application/json" \
 -d '{
-  "ranks": ["A", "B", "C", "D", "E"],
+  "ranks": [1, 14, 15, 16, 17],
   "suits": ["hearts", "hearts", "hearts", "hearts", "hearts"]
 }'
 ```
@@ -277,3 +284,4 @@ Contributions are welcome! Please follow these steps:
 - **Deployment:** Consider containerizing the application using Docker for easier deployment and scalability.
 - **Unit and Integration Tests:** Enhance the test coverage to ensure robust and reliable application behavior.
 - **Performance Monitoring:** Implement monitoring tools (e.g., Spring Actuator) to observe the application's health and performance metrics.
+```

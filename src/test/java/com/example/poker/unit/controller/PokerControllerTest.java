@@ -31,7 +31,7 @@ public class PokerControllerTest {
         MockitoAnnotations.openMocks(this);
         request = new PokerHandRequest();
         request.setRanks(List.of(5, 6, 7, 8, 9));
-        request.setSuits(List.of('S', 'H', 'D', 'C', 'H'));
+        request.setSuits(List.of("spades", "hearts", "diamonds", "clubs", "hearts"));
     }
 
     @Test

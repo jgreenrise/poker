@@ -23,9 +23,12 @@ public class PokerControllerEndToEndTest {
 
     @ParameterizedTest
     @CsvSource({
-            "'5,6,7,8,9', '[\"S\",\"H\",\"D\",\"C\",\"H\"]', true, true",
-            "'2,3,4,5,6', '[\"C\",\"D\",\"H\",\"S\",\"S\"]', true, true",
-            "'1,10,11,12,13', '[\"C\",\"D\",\"H\",\"S\",\"S\"]', true, true"
+            "'5,6,7,8,9', '[\"spades\",\"hearts\",\"diamonds\",\"clubs\",\"hearts\"]', true, true",
+            "'2,3,4,5,6', '[\"clubs\",\"diamonds\",\"hearts\",\"spades\",\"spades\"]', true, true",
+            "'10,11,12,13,1', '[\"clubs\",\"diamonds\",\"hearts\",\"spades\",\"spades\"]', true, true",
+            "'1,10,11,12,13', '[\"clubs\",\"diamonds\",\"hearts\",\"spades\",\"spades\"]', true, true",
+            "'1,10,11,12,13,4,5', '[\"clubs\",\"diamonds\",\"hearts\",\"spades\",\"spades\",\"spades\",\"spades\"]', true, true",
+            "'1,10,11,12,13,2,3', '[\"clubs\",\"diamonds\",\"hearts\",\"spades\",\"spades\",\"spades\",\"spades\"]', true, true"
     })
     public void whenValidPokerHandRequest_thenReturnsSuccess(String ranks, String suits, boolean expectedSuccess, boolean expectedData) throws Exception {
         String content = String.format("{\"ranks\":[%s],\"suits\":%s}", ranks, suits);
