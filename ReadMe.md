@@ -38,13 +38,14 @@ The Poker Service API is a Spring Boot application designed to evaluate poker ha
 1. Clone the repository:
    ```bash
    git clone https://github.com/jgreenrise/poker.git
-   cd poker-service
+   cd poker
    ```
 
 2. Build the project using Gradle:
    ```bash
    ./gradlew build
    ```
+   This also ensure all unit, E2E and mock integration test cases are passing. Test cases are located at /src/test/*
 
 3. Run the application:
    ```bash

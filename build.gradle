@@ -23,6 +23,10 @@ repositories {
 	mavenCentral()
 }
 
+test {
+	useJUnitPlatform() // For JUnit 5
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -41,6 +45,7 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
 	// Caching
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
